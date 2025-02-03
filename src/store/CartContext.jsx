@@ -43,7 +43,7 @@ const cartReducer = (state, action) => {
         ...existingCarItem,
         quantity: existingCarItem.quantity -1
       }
-      updatedItems[existingCartItemIndex] = [updatedItem]
+      updatedItems[existingCartItemIndex] = updatedItem;
     }
 
     return { ...state, items: updatedItems };
@@ -60,7 +60,7 @@ export const CartContextProvider = ({ children }) => {
   }
 
   const removeItem = (id) => {
-    dispatchCartAction({type: "REMOVE_ITEM", item})
+    dispatchCartAction({type: "REMOVE_ITEM", id})
   }
 
   const cartContext = {
