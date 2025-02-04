@@ -42,13 +42,10 @@ const Checkout = () => {
     clearData()
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
+  const checkoutAction = async (formData) => {
     const customerData = Object.fromEntries(formData.entries());
 
-    sendRequest(
+    await sendRequest(
       JSON.stringify({
         order: {
           items,
@@ -89,7 +86,7 @@ const Checkout = () => {
 
   return (
     <Modal open={progress === "checkout"} onClose={handleCloseCheckout}>
-      <form onSubmit={handleSubmit}>
+      <form action={checkoutAction}>
         <h2>Checkout</h2>
         <p>Total Amount: {formattedPrice}</p>
 
