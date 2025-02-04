@@ -25,7 +25,7 @@ const Cart = () => {
   }
 
   return (
-    <Modal className="cart" open={progress === "cart"} onClose={progress === 'cart' && handleHideCart }>
+    <Modal className="cart" open={progress === "cart"} onClose={progress === 'cart' ? handleHideCart : null }>
       <h2>Your Cart</h2>
       <ul>
         {items.map((item) => (
