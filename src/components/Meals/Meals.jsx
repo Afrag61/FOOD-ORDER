@@ -1,3 +1,4 @@
+import Error from "../UI/Error";
 import useHttp from "./../../hooks/useHttp";
 import MealItem from "./MealItem";
 
@@ -10,8 +11,12 @@ const Meals = () => {
     error,
   } = useHttp("http://192.168.1.3:3000/meals", requestConfig, []);
 
+  if(error){
+    return <Error title="Failed to fetch meals" message={error}/>
+  }
+
   if (isLoading) {
-    return <p>Fetching meals...</p>;
+    return <h1 className="load-meals-text">Fetching meals...</h1>;
   }
 
   return (
