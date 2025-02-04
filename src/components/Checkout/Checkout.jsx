@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useActionState } from "react";
 import Modal from "../UI/Modal.jsx";
 import CartContext from "../../store/CartContext.jsx";
 import Input from "../UI/Input.jsx";
@@ -21,7 +21,6 @@ const Checkout = () => {
   const {
     data,
     error,
-    isLoading: isSending,
     sendRequest,
     clearData,
   } = useHttp("http://192.168.1.3:3000/orders", requestConfig);
@@ -42,7 +41,7 @@ const Checkout = () => {
     clearData()
   }
 
-  const checkoutAction = async (formData) => {
+  const checkoutAction = async (prevState, formData) => {
     const customerData = Object.fromEntries(formData.entries());
 
     await sendRequest(
@@ -54,6 +53,8 @@ const Checkout = () => {
       })
     );
   };
+
+  const [formState, formAction, isSending] = useActionState(checkoutAction, null)
 
   let actions = (
     <>
@@ -86,7 +87,7 @@ const Checkout = () => {
 
   return (
     <Modal open={progress === "checkout"} onClose={handleCloseCheckout}>
-      <form action={checkoutAction}>
+      <form action={formAction}>
         <h2>Checkout</h2>
         <p>Total Amount: {formattedPrice}</p>
 
